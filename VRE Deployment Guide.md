@@ -15,7 +15,6 @@ nfs-subdir-external-provisioner/nfs-subdir-external-provisioner \
 ```
 See also the storageconfigclasses in VRE/kubernetes that can be used
   
-[go to TOP](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/CMD-I3.md#vre-applications)
   
 ## Install metallb if required
 This is dependent on your implementation of kubernetes, but with bare metal k8s, Metallb must be installed before services in the cluster can be accessed externally. Metallb requires a pool of virtual (floating) IP addresses (VIPs), you define these in /kubernetes/metallb/config.yaml . These addresses can be assigned to cluster services, so that if the pod a service is running on becomes unreachable, the VIP of the service can just point at another pod. 
@@ -47,7 +46,7 @@ kubectl apply -f config.yaml
 kubectl apply -f metallb.yaml
 ```
   
-[go to TOP](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/CMD-I3.md#vre-applications)
+
 
 ## Deploy and configure PostgreSQL
 Apply the PersistentVolumeClaims, secret, and deployment in /VRE/kubernetes/opsdb:
@@ -70,9 +69,9 @@ GRANT ALL PRIVILEGES ON DATABASE "keycloak" to keycloak;
 ```
 Note that the notification service also requires an account with full access to this db.
 
-The INDOC_VRE database should have this schema [schema.sql](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/AUX/schemaonly.sql)
+The INDOC_VRE database should have this schema [schema.sql](https://github.com/vre-charite/Documentation-and-Resources/blob/main/sqlschemas/opsdbschema.sql)
 
-Within that schema, the casbin_rule table needs these rules: [casbinonly.sql](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/AUX/casbinonly.sql)
+Within that schema, the casbin_rule table needs these rules: [casbinonly.sql](https://github.com/vre-charite/Documentation-and-Resources/blob/main/sqlschemas/casbinonly.sql)
 
 Apply these .sql files with \i /path/to/sqlfile.sql, after logging in to the appropriate db.
 
@@ -133,7 +132,7 @@ Then deploy keycloak:
 kubectl apply -f keycloak.yaml
 ```
 Access the keycloak GUI and create a vre realm, create clients for kong, react-app, minio, and when you add workbenches create clients for them too.
-[go to TOP](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/CMD-I3.md#vre-applications)
+
   
 ## Install ingress-nginx
 In the file `values.yaml` the parameter `loadBalancerIP` can be configured with the IP address allocated for the communication with the internet.
@@ -148,12 +147,12 @@ helm install vre-ingress ingress-nginx/ingress-nginx --set controller.service.lo
 kubectl port-forward pods/PODNAME PORTNUMBER:PORTNUMBER
 ``` 
   
-[go to TOP](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/CMD-I3.md#vre-applications)
+
   
 ## Install kong apigateway and konga
 In the same way as with, for example, the keycloak install above, first apply the PersistentVolumeClaims and then apply the deployment yaml files.
 
-Either through konga GUI or directly with the kong container, import these services and their routes, which define the VRE internal API: [kongconfig.json](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/AUX/kongconfig.json)
+Either through konga GUI or directly with the kong container, import these services and their routes, which define the VRE internal API: [kongconfig.json](https://github.com/vre-charite/Documentation-and-Resources/blob/main/kongconfig.json)
 
   
 ## Install Consul and Vault
@@ -250,12 +249,11 @@ generated in above step.
 Progress" status until it is actually showing "running".
 kubectl exec vault-0 -n vault -- vault operator unseal $unseal_key
 ```
-Vault secrets are accessed by the containers when they are created. Configure the secrets and environment variables in [vaultconfig.json](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/AUX/vaultconfig.json) and import them into vault. You'll create a kv secrets engine with path /vre and the secrets can be accessed with 
+Vault secrets are accessed by the containers when they are created. Configure the secrets and environment variables in [vaultconfig.json](https://github.com/vre-charite/Documentation-and-Resources/blob/main/vaultconfig.json) and import them into vault. You'll create a kv secrets engine with path /vre and the secrets can be accessed with 
 
 ```
 kubectl exec vault-0 -- vault kv get -format=json vre/app/config 
 ```
-[go to TOP](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/CMD-I3.md#vre-applications)
   
 ## Create PVCs for vre greenroom and core 
 ## Deploy neo4j
@@ -300,4 +298,4 @@ The helm charts for the vre services can be installed with terraform. The manife
 ## Deploying of VRE Projects <br /> &nbsp;                         
 Deploy Workbench tools (Guacamole, JupyterHub, etc.) using the automation scripts and ansible playbooks from repository VRE-operation. 
 
-[go to TOP](https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedures/-/blob/main/CMD-I3.md#vre-applications)
+
