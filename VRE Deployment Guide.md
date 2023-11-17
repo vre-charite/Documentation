@@ -1,5 +1,5 @@
-# ** DEPLOYING VRE SERVICES**
-[TOC]
+#  DEPLOYING VRE SERVICES
+
 ## Install the NFS Provisioner or StorageClasses
 The NFS will allow kubernetes to interface with the NFS server of the VRE. 
 
