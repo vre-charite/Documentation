@@ -103,6 +103,10 @@ exit
 
 
 ## Keycloak Installation
+
+NOTE: This version of the VRE uses an older version of keycloak and is not tested with newer versions. For best results use the keycloak image provided here ghcr.io/vre-charite/keycloak:10.0.2
+
+
 Clone the repository VRE/kubernetes. In the subfolder /idp, apply the PersistentVolumeClaims. 
 ```
 kubectl apply -f new-keycloak-antd-pvc.yaml
@@ -131,7 +135,7 @@ Then deploy keycloak:
 ```
 kubectl apply -f keycloak.yaml
 ```
-Access the keycloak GUI and create a vre realm, create clients for kong, react-app, minio, and when you add workbenches create clients for them too.
+Access the keycloak GUI and create a vre realm, create clients for [kong](https://github.com/vre-charite/Documentation-and-Resources/blob/main/kong%20keycloak%20configuration.pdf), [react-app](https://github.com/vre-charite/Documentation-and-Resources/blob/main/react-app%20keycloak.pdf), [minio](https://github.com/vre-charite/Documentation-and-Resources/blob/main/minio%20keycloak%20config.pdf), and when you add workbenches create clients for them too. Follow the links for more detailed instructions.
 
   
 ## Install ingress-nginx
@@ -150,12 +154,18 @@ kubectl port-forward pods/PODNAME PORTNUMBER:PORTNUMBER
 
   
 ## Install kong apigateway and konga
+
+The kong with oidc image used by the VRE is provided here: ghcr.io/vre-charite/kongwithoidc:2.1.0
+
 In the same way as with, for example, the keycloak install above, first apply the PersistentVolumeClaims and then apply the deployment yaml files.
 
 Either through konga GUI or directly with the kong container, import these services and their routes, which define the VRE internal API: [kongconfig.json](https://github.com/vre-charite/Documentation-and-Resources/blob/main/kongconfig.json)
 
   
 ## Install Consul and Vault
+
+The versions of the images of vault and consul used by the VRE are present in this github container repository.
+
 Apply the Consul PersistentVolumeClaims and statefulsets and run:
 
 ```
@@ -294,6 +304,10 @@ https://git.bihealth.org/vre/documentation/operational-and-maintenance-procedure
 For operations logging
 
 ## Deploy the VRE services with terraform or with manifests
+The VRE services will not function until the previously discussed 3rd party services are running. Kong must be running and must be populated with the described routes and services, vault must be populated with the described values, the opsdb must be populated with the described schemas.
+
+Most of the services rely on the 'common' service to retrieve their environment values from vault.
+
 The helm charts for the vre services can be installed with terraform. The manifests for the services also exist in {vre-service}/kubernetes repos.
 ## Deploying of VRE Projects <br /> &nbsp;                         
 Deploy Workbench tools (Guacamole, JupyterHub, etc.) using the automation scripts and ansible playbooks from repository VRE-operation. 
