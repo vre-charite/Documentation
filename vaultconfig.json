@@ -34,7 +34,7 @@
     "KEYCLOAK_CLIENT_ID": "kong",
     "KEYCLOAK_ENDPOINT": "http://10.32.42.226/vre/auth/realms/vre/protocol/openid-connect/token",
     "KEYCLOAK_GRANT_TYPE": "password",
-    "KEYCLOAK_ID": "keycloak id for kong client of the format aadfdc5b-ac08-4675-4675-e2f9a10bdb50",
+    "KEYCLOAK_ID": "the 'provider ID' of the LDAP server configured in the user federation section of keycloak",
     "KEYCLOAK_MINIO_SECRET": "keycloak id for minio client of the format aadfdc5b-ac08-4675-4675-e2f9a10bdb50",
     "KEYCLOAK_REALM": "vre",
     "KEYCLOAK_SECRET": "aeeddce5-ac08-4a4c-9f6d-e2f9a10bdb50",
