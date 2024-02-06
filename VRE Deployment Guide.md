@@ -267,6 +267,9 @@ kubectl exec vault-0 -- vault kv get -format=json vre/app/config
   
 ## Create PVCs for vre greenroom and core 
 ## Deploy neo4j
+
+Please use this version of the neo4j image: ghcr.io/vre-charite/neo4j:4.0.8
+
 To login to the portal you need to create an admin user in the neo4j db like this
 
 
