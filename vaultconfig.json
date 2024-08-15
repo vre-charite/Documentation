@@ -1,6 +1,4 @@
 {
-
-  "data": {
     "APPROVAL_SERVICE": "http://approval.utility:8000",
     "ATLAS_ADMIN": "admin",
     "ATLAS_API": "http://atlas.utility:21000",
@@ -91,5 +89,4 @@
     "url_download_greenroom": "http://download.greenroom:5077/v1/download/pre/",
     "vre_core_nfs_path": "nfs/path",
     "vre_core_nfs_server": "nfs/server/path"
-  }
 }
