@@ -17,9 +17,9 @@ See also the storageconfigclasses in VRE/kubernetes that can be used
   
   
 ## Install metallb if required
-This is dependent on your implementation of kubernetes, but with bare metal k8s, Metallb must be installed before services in the cluster can be accessed externally. Metallb requires a pool of virtual (floating) IP addresses (VIPs), you define these in /kubernetes/metallb/config.yaml . These addresses can be assigned to cluster services, so that if the pod a service is running on becomes unreachable, the VIP of the service can just point at another pod. 
+This is dependent on your implementation of kubernetes, but with bare metal k8s, Metallb must be installed before services in the cluster can be accessed externally. Metallb requires a pool of virtual (floating) IP addresses (VIPs), you define these in [/kubernetes/metallb/config.yaml](https://github.com/vre-charite/kubernetes/blob/main/metallb/config.yaml) . metallb is in charge of assigning virtual IPs to cluster LoadBalancer services, so that if the pod a service is running on becomes unreachable, the VIP of the service can just point at another pod. 
 
-Source code in VRE/kubernetes/metallb
+Deployment resources [here](https://github.com/vre-charite/kubernetes/tree/main/metallb)
 
 Create the namespace metallb-system
 ```
