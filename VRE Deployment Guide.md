@@ -296,6 +296,82 @@ cypher-shell "CREATE (u:User {global_entity_id: 'e25a09aa-919f-11eb-ac2b-ee94770
 ```
 ## Deploy RabbitMQ
 Messager for the file operations in the greenroom.
+
+## Deploy Atlas in utility 
+Atlas records data actions/transactions. To install, apply the PVCs and configmap, and then apply the statefulset. Once Atlas is running you need to import custom entity types. Creat a file called entity.json (content below) and then run `curl -u admin:(password) --noproxy '*' -X POST -H "Content-Type: application/json" -d @entity.json "http://10.32.42.234:21000/api/atlas/v2/types/typedefs"`
+
+entity.json:
+```
+{
+  "enumDefs": [],
+  "structDefs": [],
+  "classificationDefs": [],
+  "entityDefs": [
+    {
+      "category": "ENTITY",
+      "guid": "cf8adcbf-63f3-490b-babf-5efc1f60f3ce",
+      "createdBy": "admin",
+      "updatedBy": "admin",
+      "createTime": 1612998687798,
+      "updateTime": 1612998687798,
+      "version": 1,
+      "name": "file_data",
+      "description": "basic file metadata entity",
+      "typeVersion": "1",
+      "serviceType": "hdfs_path",
+      "attributeDefs": [
+        {
+          "name": "name",
+          "typeName": "string",
+          "isOptional": false,
+          "cardinality": "SINGLE",
+          "valuesMinCount": 1,
+          "valuesMaxCount": 1,
+          "isUnique": true,
+          "isIndexable": true,
+          "includeInNotification": false,
+          "searchWeight": 10
+        },
+        {
+          "name": "global_entity_id",
+          "typeName": "string",
+          "isOptional": true,
+          "cardinality": "SINGLE",
+          "valuesMinCount": 0,
+          "valuesMaxCount": 1,
+          "isUnique": true,
+          "isIndexable": true,
+          "includeInNotification": false,
+          "searchWeight": 10
+        }
+      ],
+      "superTypes": ["DataSet"],
+      "subTypes": [],
+      "relationshipAttributeDefs": [
+        {
+          "name": "inputToProcesses",
+          "typeName": "array<Process>",
+          "isOptional": true,
+          "cardinality": "SET",
+          "valuesMinCount": -1,
+          "valuesMaxCount": -1,
+          "isUnique": false,
+          "isIndexable": false,
+          "includeInNotification": false,
+          "searchWeight": -1,
+          "relationshipTypeName": "dataset_process_inputs",
+          "isLegacyAttribute": false
+        }
+      ],
+      "businessAttributeDefs": {}
+    }
+  ],
+  "relationshipDefs": [],
+  "businessMetadataDefs": []
+}
+
+```
+
 ## Deploy redis
 Stores read/write states of datasets for file operation requests
 ## Deploy minio with KES
